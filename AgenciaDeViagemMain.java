@@ -5,7 +5,7 @@ public class AgenciaDeViagemMain {
 	static StringBuffer memoriaPacotesDeViagem = new StringBuffer();
 	static StringBuffer memoriaClientes = new StringBuffer();
 	static Scanner scan = new Scanner (System.in);
-
+    //Mudou aqui
 	public static void main(String[] args) {
 		char opcao, resp = 'N';
 		do {
