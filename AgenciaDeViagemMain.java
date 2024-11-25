@@ -5,6 +5,7 @@ public class AgenciaDeViagemMain {
 	static StringBuffer memoriaPacotesDeViagem = new StringBuffer();
 	static StringBuffer memoriaClientes = new StringBuffer();
 	static Scanner scan = new Scanner (System.in);
+
 	public static void main(String[] args) {
 		char opcao, resp = 'N';
 		do {
@@ -21,32 +22,16 @@ public class AgenciaDeViagemMain {
 				}
 				break;
 			case '3':
-				if (verificarMemoriaVazia(memoriaClientes)) {
-					System.out.println("\nNenhum cliente foi cadastrado. Operação cancelada.");
-				} else {
-					alterarDados();					
-				}
+				alterarDados();					
 				break;
 			case '4':
-				if (verificarMemoriaVazia(memoriaClientes)) {
-					System.out.println("\nNenhum cliente foi cadastrado. Operação cancelada.");
-				} else {
-					excluirDados();				
-				}
+				excluirDados();				
 				break;
 			case '5':
-				if (verificarMemoriaVazia(memoriaPacotesDeViagem)) {
-					System.out.println("\nNenhum pacote foi cadastrado. Operação cancelada.");
-				} else {
-					pesquisarDadosPacote();				
-				}
+				pesquisarDadosPacote();				
 				break;
 			case '6':
-				if (verificarMemoriaVazia(memoriaClientes)) {
-					System.out.println("\nNenhum cliente foi cadastrado. Operação cancelada.");
-				} else {
-					pesquisarDadosCliente();			
-				}
+				pesquisarDadosCliente();			
 				break;
 			case '7':
 				if (verificarMemoriaVazia(memoriaClientes) || verificarMemoriaVazia(memoriaPacotesDeViagem)) {
@@ -147,27 +132,32 @@ public class AgenciaDeViagemMain {
 	public static void inserirDadosCliente(){
 		int codigoCliente, codigoPacote;
 		String nomeCliente, dataEmbarque;
-		try {
-			System.out.print("Digite o código do cliente: ");
-			codigoCliente = scan.nextInt();
-			System.out.print("Digite o nome do cliente: ");
-			nomeCliente = scan.next();
-			System.out.print("Digite a data de embarque do cliente (dd-mm-aaaa): ");
-			dataEmbarque = scan.next();
-			System.out.println("\n" + memoriaPacotesDeViagem);
-			System.out.print("Digite um dos códigos acima que deseja associar ao cliente: ");
-			codigoPacote = scan.nextInt();
-			if (!verificarPacoteExistente(codigoPacote)) {
-				System.out.println("\nErro: O código do pacote informado não existe. Inserção de dados cancelada.");
-			} else {
-				Clientes reg = new Clientes(codigoCliente, nomeCliente, dataEmbarque, codigoPacote);
-				memoriaClientes.append(reg.toString());
-				gravarDados(memoriaClientes, "Clientes.txt");
-				System.out.println("\nCliente cadastrado com sucesso!");	
-			}
-		} catch (Exception e) {
-			System.out.println("\nErro de gravação");
+		if (verificarMemoriaVazia(memoriaPacotesDeViagem)) {
+			System.out.println("\nNenhum pacote foi cadastrado. Operação cancelada.");
+		} else {
+			try {
+				System.out.print("Digite o código do cliente: ");
+				codigoCliente = scan.nextInt();
+				System.out.print("Digite o nome do cliente: ");
+				nomeCliente = scan.next();
+				System.out.print("Digite a data de embarque do cliente (dd-mm-aaaa): ");
+				dataEmbarque = scan.next();
+				System.out.println("\n" + memoriaPacotesDeViagem);
+				System.out.print("Digite um dos códigos acima que deseja associar ao cliente: ");
+				codigoPacote = scan.nextInt();
+				if (!verificarPacoteExistente(codigoPacote)) {
+					System.out.println("\nErro: O código do pacote informado não existe. Inserção de dados cancelada.");
+				} else {
+					Clientes reg = new Clientes(codigoCliente, nomeCliente, dataEmbarque, codigoPacote);
+					memoriaClientes.append(reg.toString());
+					gravarDados(memoriaClientes, "Clientes.txt");
+					System.out.println("\nCliente cadastrado com sucesso!");	
+				}
+			} catch (Exception e) {
+				System.out.println("\nErro de gravação");
+			}				
 		}
+		
 	}
 	
 	public static boolean verificarPacoteExistente(int codigoPacote) {
@@ -193,8 +183,8 @@ public class AgenciaDeViagemMain {
 		boolean achou=false;
 		int procura;
 		iniciarArquivo(memoriaClientes, "Clientes.txt"); 
-		System.out.println("\n" + memoriaClientes);
 		if (memoriaClientes.length() != 0) {
+			System.out.println("\n" + memoriaClientes);
 			System.out.print("\nDigite o código do cliente para alteração (Primeira coluna dos registros): ");
 			procura = scan.nextInt();
 			inicio = 0;  
@@ -229,8 +219,8 @@ public class AgenciaDeViagemMain {
 			}else{
 				System.out.println("\nCódigo não encontrado. Alteração cancelada.");
 			}
-		}else{
-			System.out.println("\nArquivo vazio.");
+		} else {
+			System.out.println("\nArquivo vazio. Operação cancelada.");
 		}
 	}
 	
@@ -279,8 +269,8 @@ public class AgenciaDeViagemMain {
 			if (!achou){
 				System.out.println("\nCódigo não encontrado. Operação cancelada.");
 			}
-		}else{
-			System.out.println("\nArquivo vazio");
+		} else {
+			System.out.println("\nArquivo vazio. Operação cancelada.");
 		}
 	}
 	
@@ -313,10 +303,10 @@ public class AgenciaDeViagemMain {
 				inicio = fim + 1;  
 			}
 			if (!achou){
-				System.out.println("\nCódigo não encontrado");
+				System.out.println("\nCódigo não encontrado.");
 			}
 		}else{
-			System.out.println("\nArquivo vazio");
+			System.out.println("\nArquivo vazio. Operação cancelada.");
 		}
 	}
 	
@@ -357,7 +347,7 @@ public class AgenciaDeViagemMain {
 			}
 			
 		} else {
-			System.out.println("\nArquivo vazio!");
+			System.out.println("\nArquivo vazio. Operação cancelada.");
 		}
 	}
 	
