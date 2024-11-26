@@ -40,7 +40,10 @@ public class AgenciaDeViagemMain {
 					pesquisarPorPacote();
 				}
 				break;
-			case '8':
+			case '8':	
+				mostrarTodosDados();
+				break;
+			case '9':
 				System.out.print("Deseja realmente sair do programa? S/N: ");
 				resp = Character.toUpperCase(scan.next().charAt(0));
 				if (resp == 'S') {
@@ -56,6 +59,7 @@ public class AgenciaDeViagemMain {
 	}
 	
 	public static char menu(){
+		System.out.println("==================================================================================================================================================");
 		System.out.print("\nEscolha uma Opção:\n"+
 				"1. Inserir dados do pacote\n"+
 				"2. Inserir dados do cliente\n"+
@@ -64,8 +68,10 @@ public class AgenciaDeViagemMain {
 				"5. Pesquisar dados do pacote\n"+
 				"6. Pesquisar dados do cliente\n"+
 				"7. Pesquisar registros de clientes baseado em um pacote\n" +
-				"8. Sair do programa\n"
-				+ "Opção: ");
+				"8. Mostrar dados de pacotes e clientes\n" +
+				"9. Sair do programa\n");
+				System.out.println("==================================================================================================================================================");
+		System.out.print("Opção:");
 		return scan.next().charAt(0);
 	} 
 	
@@ -376,6 +382,36 @@ public class AgenciaDeViagemMain {
 			if (!achou) {
 				System.out.println("\nNenhum cliente está associado a este pacote.");
 			}	
+		}
+	}
+	
+	public static void mostrarTodosDados() {
+		if (verificarMemoriaVazia(memoriaPacotesDeViagem)) {
+			System.out.println("\nNenhum pacote de viagem foi cadastrado.");
+		} else {
+			System.out.println("\n---- Pacotes de Viagem ----");
+			String [] pacotes = memoriaClientes.toString().split("\n");
+			for (String pacote : pacotes) {
+				String [] dadosPacote = pacote.split("\t");
+				System.out.println("Código Pacote: " + dadosPacote[0] + 
+                        "\nDestino: " + dadosPacote[1] + 
+                        "\nPreço: R$ " + dadosPacote[2]);
+				System.out.println("-------------------------");
+			}
+		}
+		if (verificarMemoriaVazia(memoriaClientes)) {
+			System.out.println("\nNenhum cliente foi cadastrado.");
+		} else {
+			System.out.println("\n---- Clientes Cadastrados ----");
+			String [] clientes = memoriaClientes.toString().split("\n");
+			for (String cliente : clientes) {
+				String [] dadosCliente = cliente.split("\t");
+				System.out.println("Código Cliente: " + dadosCliente[0] +
+                        "\nNome: " + dadosCliente[1] +
+                        "\nData de Embarque: " + dadosCliente[2] +
+                        "\nCódigo Pacote: " + dadosCliente[3]);
+				System.out.println("-------------------------");
+			}
 		}
 	}
 }
