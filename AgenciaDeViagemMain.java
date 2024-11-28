@@ -147,17 +147,18 @@ public class AgenciaDeViagemMain {
 				nomeCliente = scan.next();
 				System.out.print("Digite a data de embarque do cliente (dd-mm-aaaa): ");
 				dataEmbarque = scan.next();
-				System.out.println("\n" + memoriaPacotesDeViagem);
-				System.out.print("Digite um dos códigos acima que deseja associar ao cliente: ");
-				codigoPacote = scan.nextInt();
-				if (!verificarPacoteExistente(codigoPacote)) {
-					System.out.println("\nErro: O código do pacote informado não existe. Inserção de dados cancelada.");
-				} else {
-					Clientes reg = new Clientes(codigoCliente, nomeCliente, dataEmbarque, codigoPacote);
-					memoriaClientes.append(reg.toString());
-					gravarDados(memoriaClientes, "Clientes.txt");
-					System.out.println("\nCliente cadastrado com sucesso!");	
-				}
+				do {
+					System.out.println("\n" + memoriaPacotesDeViagem);
+					System.out.print("Digite um dos códigos acima que deseja associar ao cliente: ");
+					codigoPacote = scan.nextInt();
+					if (!verificarPacoteExistente(codigoPacote)) {
+						System.out.println("\nErro: O código do pacote informado não existe. Informe um código válido.");
+					}
+				} while (!verificarPacoteExistente(codigoPacote));
+				Clientes reg = new Clientes(codigoCliente, nomeCliente, dataEmbarque, codigoPacote);
+				memoriaClientes.append(reg.toString());
+				gravarDados(memoriaClientes, "Clientes.txt");
+				System.out.println("\nCliente cadastrado com sucesso!");	
 			} catch (Exception e) {
 				System.out.println("\nErro de gravação");
 			}				
